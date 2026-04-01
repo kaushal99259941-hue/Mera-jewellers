@@ -6,25 +6,27 @@
     <title>Meera Jewellers Padra - Live Gold Rate</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        body { font-family: 'Segoe UI', sans-serif; text-align: center; background-color: #fffaf0; margin: 0; padding: 15px; }
-        .container { background: white; padding: 25px; border-radius: 25px; border: 2px solid #d4af37; box-shadow: 0 10px 30px rgba(0,0,0,0.1); max-width: 400px; margin: 10px auto; }
-        .rate-card { background: linear-gradient(135deg, #ffd700, #daa520); border-radius: 15px; padding: 15px; margin-bottom: 20px; color: #333; }
-        .rate-row { display: flex; justify-content: space-between; font-weight: bold; padding: 8px 0; border-bottom: 1px dashed rgba(0,0,0,0.1); }
-        .btn { display: flex; align-items: center; justify-content: center; padding: 15px; margin: 12px 0; border-radius: 12px; font-size: 18px; text-decoration: none; font-weight: bold; color: white; }
+        body { font-family: 'Segoe UI', sans-serif; text-align: center; background-color: #fffaf0; margin: 0; padding: 10px; }
+        .container { background: white; padding: 25px; border-radius: 25px; border: 2px solid #d4af37; box-shadow: 0 10px 30px rgba(0,0,0,0.15); max-width: 400px; margin: 10px auto; }
+        .rate-card { background: linear-gradient(135deg, #ffd700, #daa520); border-radius: 15px; padding: 15px; margin-bottom: 20px; color: #333; box-shadow: 0 4px 10px rgba(0,0,0,0.2); }
+        .rate-row { display: flex; justify-content: space-between; font-weight: bold; padding: 10px 0; border-bottom: 1px dashed rgba(0,0,0,0.1); font-size: 18px; }
+        h1 { color: #b8860b; font-size: 28px; margin: 10px 0; }
+        .btn { display: flex; align-items: center; justify-content: center; padding: 15px; margin: 12px 0; border-radius: 12px; font-size: 18px; text-decoration: none; font-weight: bold; color: white; transition: 0.3s; }
         .call { background: linear-gradient(45deg, #007bff, #00c6ff); }
         .maps { background: linear-gradient(45deg, #ea4335, #ff6b6b); }
-        .whatsapp-float { position: fixed; width: 60px; height: 60px; bottom: 20px; right: 20px; background-color: #25d366; color: white; border-radius: 50%; font-size: 35px; display: flex; align-items: center; justify-content: center; z-index: 100; text-decoration: none; }
+        .whatsapp-float { position: fixed; width: 60px; height: 60px; bottom: 20px; right: 20px; background-color: #25d366; color: white; border-radius: 50%; font-size: 35px; display: flex; align-items: center; justify-content: center; z-index: 100; text-decoration: none; box-shadow: 2px 5px 15px rgba(0,0,0,0.3); }
+        #status { font-size: 11px; margin-top: 10px; font-weight: bold; color: #d32f2f; }
     </style>
 </head>
 <body>
 
 <div class="container">
     <div class="rate-card">
-        <h3>📊 आज का लाइव भाव (AMD)</h3>
-        <div class="rate-row"><span>Gold 999 (10g):</span> <span id="gold24">Loading...</span></div>
-        <div class="rate-row"><span>Gold 916 (10g):</span> <span id="gold22">Loading...</span></div>
-        <div class="rate-row"><span>Silver 999 (1kg):</span> <span id="silver">Loading...</span></div>
-        <div id="status" style="font-size: 10px; margin-top: 10px;">🔴 Live Market Updates</div>
+        <h3>💰 आज का लाइव भाव (AMD)</h3>
+        <div class="rate-row"><span>24K Gold (10g):</span> <span id="gold24">चेक कर रहा हूँ...</span></div>
+        <div class="rate-row"><span>22K Gold (10g):</span> <span id="gold22">चेक कर रहा हूँ...</span></div>
+        <div class="rate-row"><span>Silver 999 (1kg):</span> <span id="silver">₹ 92,500*</span></div>
+        <div id="status">🔴 LIVE MARKET DATA</div>
     </div>
 
     <h1>✨ Meera Jewellers ✨</h1>
@@ -38,27 +40,27 @@
 <a href="https://wa.me/919925994193" class="whatsapp-float" target="_blank"><i class="fa-brands fa-whatsapp"></i></a>
 
 <script>
-    async function updateRates() {
+    async function fetchRates() {
         try {
-            // Ahmedabad/India Market API
-            const res = await fetch('https://api.gold-api.com/price/XAU');
-            const data = await res.json();
-            // 10g Calculation with Indian Tax/Premium estimate
-            let basePrice = (data.price / 31.1035) * 83.5; 
-            let price24k = Math.round(basePrice * 10 * 1.15); // Adding approx duty/premium
+            // Live Gold API (Market Data)
+            const response = await fetch('https://api.gold-api.com/price/XAU');
+            const data = await response.json();
+            
+            // Indian Market Calculation (Aarav Bullion AMD andaza)
+            let baseRate = (data.price / 31.1035) * 84; // Currency convert
+            let price24k = Math.round(baseRate * 10 * 1.15); // +Duty & Premium
             let price22k = Math.round(price24k * 0.92);
             
             document.getElementById('gold24').innerText = "₹ " + price24k.toLocaleString('en-IN');
             document.getElementById('gold22').innerText = "₹ " + price22k.toLocaleString('en-IN');
-            document.getElementById('silver').innerText = "₹ 91,500*"; 
-            document.getElementById('status').innerText = "🟢 Last Updated: " + new Date().toLocaleTimeString();
-        } catch (e) {
-            document.getElementById('gold24').innerText = "₹ 72,800*";
-            document.getElementById('gold22').innerText = "₹ 66,900*";
+            document.getElementById('status').innerText = "🟢 Last Sync: " + new Date().toLocaleTimeString();
+        } catch (error) {
+            document.getElementById('gold24').innerText = "₹ 73,500*";
+            document.getElementById('gold22').innerText = "₹ 67,200*";
         }
     }
-    updateRates();
-    setInterval(updateRates, 600000); // हर 10 मिनट में अपने आप अपडेट होगा
+    fetchRates();
+    setInterval(fetchRates, 300000); // हर 5 मिनट में अपने आप चेक करेगा
 </script>
 
 </body>
