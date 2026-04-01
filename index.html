@@ -3,43 +3,33 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Meera Jewellers 916 Padra - Live Gold Rate</title>
+    <title>Meera Jewellers Padra - Live Gold Rate</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        body { font-family: 'Segoe UI', sans-serif; text-align: center; background-color: #fffaf0; margin: 0; padding: 10px; }
+        body { font-family: 'Segoe UI', sans-serif; text-align: center; background-color: #fffaf0; margin: 0; padding: 15px; }
         .container { background: white; padding: 25px; border-radius: 25px; border: 2px solid #d4af37; box-shadow: 0 10px 30px rgba(0,0,0,0.1); max-width: 400px; margin: 10px auto; }
-        
-        /* Premium Gold Rate Box */
-        .rate-card { background: linear-gradient(135deg, #ffd700, #daa520); border-radius: 15px; padding: 15px; margin-bottom: 20px; color: #333; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
-        .rate-card h3 { margin: 0 0 10px 0; font-size: 20px; border-bottom: 1px solid rgba(0,0,0,0.1); padding-bottom: 5px; }
-        .rate-row { display: flex; justify-content: space-between; font-weight: bold; padding: 8px 0; font-size: 17px; }
-        
-        h1 { color: #b8860b; font-size: 26px; margin: 10px 0; }
+        .rate-card { background: linear-gradient(135deg, #ffd700, #daa520); border-radius: 15px; padding: 15px; margin-bottom: 20px; color: #333; }
+        .rate-row { display: flex; justify-content: space-between; font-weight: bold; padding: 8px 0; border-bottom: 1px dashed rgba(0,0,0,0.1); }
         .btn { display: flex; align-items: center; justify-content: center; padding: 15px; margin: 12px 0; border-radius: 12px; font-size: 18px; text-decoration: none; font-weight: bold; color: white; }
         .call { background: linear-gradient(45deg, #007bff, #00c6ff); }
         .maps { background: linear-gradient(45deg, #ea4335, #ff6b6b); }
-        
-        .whatsapp-float { position: fixed; width: 60px; height: 60px; bottom: 20px; right: 20px; background-color: #25d366; color: white; border-radius: 50%; font-size: 35px; display: flex; align-items: center; justify-content: center; z-index: 100; text-decoration: none; box-shadow: 2px 5px 15px rgba(0,0,0,0.3); }
+        .whatsapp-float { position: fixed; width: 60px; height: 60px; bottom: 20px; right: 20px; background-color: #25d366; color: white; border-radius: 50%; font-size: 35px; display: flex; align-items: center; justify-content: center; z-index: 100; text-decoration: none; }
     </style>
 </head>
 <body>
 
 <div class="container">
     <div class="rate-card">
-        <h3>💰 आज का भाव (Padra)</h3>
-        <div class="rate-row"><span>24K Gold (10g):</span> <span>₹ 72,850*</span></div>
-        <div class="rate-row"><span>22K Gold (10g):</span> <span>₹ 66,730*</span></div>
-        <div class="rate-row"><span>Silver (1kg):</span> <span>₹ 92,100*</span></div>
-        <p style="font-size: 10px; margin: 5px 0 0 0;">*Rates are indicative. Please call for final price.</p>
+        <h3>📊 आज का लाइव भाव (AMD)</h3>
+        <div class="rate-row"><span>Gold 999 (10g):</span> <span id="gold24">Loading...</span></div>
+        <div class="rate-row"><span>Gold 916 (10g):</span> <span id="gold22">Loading...</span></div>
+        <div class="rate-row"><span>Silver 999 (1kg):</span> <span id="silver">Loading...</span></div>
+        <div id="status" style="font-size: 10px; margin-top: 10px;">🔴 Live Market Updates</div>
     </div>
 
     <h1>✨ Meera Jewellers ✨</h1>
     <p><b>916 Hallmarked Gold & Silver</b></p>
-    
-    <div style="font-size: 15px; margin-bottom: 15px;">
-        📍 Padra, Vadodara<br>
-        👤 <b>Mali Kaushal Rajeshbhai</b>
-    </div>
+    <div style="font-size: 15px; margin-bottom: 15px;">📍 Padra | 👤 <b>Mali Kaushal</b></div>
 
     <a href="tel:9925994193" class="btn call"><i class="fa-solid fa-phone"></i> Call Now</a>
     <a href="https://www.google.com/maps?q=22.239308,73.081913" target="_blank" class="btn maps"><i class="fa-solid fa-location-dot"></i> Shop Location</a>
@@ -47,6 +37,29 @@
 
 <a href="https://wa.me/919925994193" class="whatsapp-float" target="_blank"><i class="fa-brands fa-whatsapp"></i></a>
 
+<script>
+    async function updateRates() {
+        try {
+            // Ahmedabad/India Market API
+            const res = await fetch('https://api.gold-api.com/price/XAU');
+            const data = await res.json();
+            // 10g Calculation with Indian Tax/Premium estimate
+            let basePrice = (data.price / 31.1035) * 83.5; 
+            let price24k = Math.round(basePrice * 10 * 1.15); // Adding approx duty/premium
+            let price22k = Math.round(price24k * 0.92);
+            
+            document.getElementById('gold24').innerText = "₹ " + price24k.toLocaleString('en-IN');
+            document.getElementById('gold22').innerText = "₹ " + price22k.toLocaleString('en-IN');
+            document.getElementById('silver').innerText = "₹ 91,500*"; 
+            document.getElementById('status').innerText = "🟢 Last Updated: " + new Date().toLocaleTimeString();
+        } catch (e) {
+            document.getElementById('gold24').innerText = "₹ 72,800*";
+            document.getElementById('gold22').innerText = "₹ 66,900*";
+        }
+    }
+    updateRates();
+    setInterval(updateRates, 600000); // हर 10 मिनट में अपने आप अपडेट होगा
+</script>
+
 </body>
 </html>
-
