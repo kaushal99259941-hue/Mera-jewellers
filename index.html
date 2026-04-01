@@ -7,51 +7,40 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         body { font-family: 'Segoe UI', sans-serif; text-align: center; background-color: #fcf8f0; margin: 0; padding: 20px; }
-        .container { background: white; padding: 40px 20px; border-radius: 20px; border: 2px solid #d4af37; box-shadow: 0 10px 25px rgba(0,0,0,0.1); max-width: 400px; margin: 50px auto; }
-        h1 { color: #b8860b; margin-bottom: 10px; }
-        .details { margin-bottom: 30px; font-size: 18px; }
+        .container { background: white; padding: 40px 20px; border-radius: 25px; border: 2px solid #d4af37; box-shadow: 0 10px 30px rgba(0,0,0,0.15); max-width: 400px; margin: 40px auto; }
+        h1 { color: #b8860b; font-size: 30px; margin-bottom: 5px; }
+        .tagline { color: #8b4513; font-weight: bold; display: block; margin-bottom: 25px; }
         
-        /* Chota Floating WhatsApp Logo (Right Corner) */
-        .whatsapp-float {
-            position: fixed;
-            width: 60px;
-            height: 60px;
-            bottom: 20px;
-            right: 20px;
-            background-color: #25d366;
-            color: #FFF;
-            border-radius: 50px;
-            text-align: center;
-            font-size: 35px;
-            box-shadow: 2px 2px 10px rgba(0,0,0,0.2);
-            z-index: 100;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-decoration: none;
-        }
+        /* Premium Buttons Style */
+        .btn { display: flex; align-items: center; justify-content: center; padding: 18px; margin: 20px 0; border-radius: 15px; font-size: 20px; text-decoration: none; font-weight: bold; transition: 0.3s; color: white; }
+        .btn i { margin-right: 15px; font-size: 24px; }
+        
+        .call { background: linear-gradient(45deg, #007bff, #00c6ff); box-shadow: 0 4px 15px rgba(0,123,255,0.3); }
+        .maps { background: linear-gradient(45deg, #ea4335, #ff6b6b); box-shadow: 0 4px 15px rgba(234,67,53,0.3); }
+        
+        .btn:hover { transform: translateY(-3px); opacity: 0.9; }
 
-        .btn { display: flex; align-items: center; justify-content: center; padding: 15px; margin: 15px 0; border-radius: 12px; font-size: 18px; text-decoration: none; font-weight: bold; }
-        .call { background-color: #007bff; color: white; }
-        .maps { background-color: #ea4335; color: white; }
+        /* Floating WhatsApp Logo */
+        .whatsapp-float { position: fixed; width: 65px; height: 65px; bottom: 25px; right: 25px; background-color: #25d366; color: #FFF; border-radius: 50px; text-align: center; font-size: 35px; box-shadow: 3px 3px 15px rgba(0,0,0,0.3); z-index: 100; display: flex; align-items: center; justify-content: center; text-decoration: none; }
     </style>
 </head>
 <body>
 
 <div class="container">
     <h1>✨ Meera Jewellers ✨</h1>
-    <p><b>916 Hallmarked Gold & Silver</b></p>
-    <div class="details">
+    <span class="tagline">916 Hallmarked Gold & Silver</span>
+    
+    <div style="font-size: 18px; margin-bottom: 25px;">
         📍 Padra, Vadodara<br>
         <b>Mali Kaushal Rajeshbhai</b>
     </div>
 
     <a href="tel:9925994193" class="btn call">
-        <i class="fa-solid fa-phone"></i>&nbsp; Call Now
+        <i class="fa-solid fa-phone-flip"></i> कॉल करें (Call)
     </a>
 
     <a href="https://www.google.com/maps?q=22.239308,73.081913" target="_blank" class="btn maps">
-        <i class="fa-solid fa-location-dot"></i>&nbsp; Shop Location
+        <i class="fa-solid fa-location-dot"></i> दुकान का रास्ता
     </a>
 </div>
 
@@ -61,3 +50,4 @@
 
 </body>
 </html>
+
